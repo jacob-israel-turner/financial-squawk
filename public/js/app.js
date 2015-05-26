@@ -22,6 +22,13 @@ app.config(function($routeProvider) {
 		templateUrl: "views/sign_inTmpl.html",
 		controller: "sign_inCtrl"
 		//resolve if necessary
+	});
+
+	$routeProvider
+	.when("/signup", {
+		templateUrl: "views/sign_upTmpl.html",
+		controller: "sign_upCtrl"
+		//resolve if necessary
 	})
 
 	// $routeProvider
@@ -32,7 +39,7 @@ app.config(function($routeProvider) {
 	// })
 
 	.otherwise({
-		redirectTo: "/home"
+		redirectTo: "/signin"
 	});
 
 });

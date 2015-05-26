@@ -12,9 +12,9 @@ var app = angular.module("financialSquawk");
                         json: getTickerResultData,
                         keys: {
                             x: 'year',
-                            value: ['totalassets', 'commonstock']
+                            value: ['totalrevenue', 'costofrevenue', 'netincome']
                         },
-                        type: 'spline',
+                        type: 'bar',
                         xFormat: '%Y'
                     },
                     axis: {
@@ -33,8 +33,8 @@ var app = angular.module("financialSquawk");
         };
 
         $scope.enterTicker = function(ticker) {
-            $scope.init(ticker)
-        }
+            $scope.init(ticker);
+        };
         // $scope.getTickerData = function(ticker) { //ticker is a placeholder for selected which is on my homeCtrl
         //     console.log('main_homeCtrl: ', ticker);
         // explore_stocksService.getTicker(ticker).then(function(data) {
