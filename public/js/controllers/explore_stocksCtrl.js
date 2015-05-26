@@ -2,8 +2,8 @@ var app = angular.module("financialSquawk");
 	
 	app.controller("explore_stocksCtrl", function($scope, explore_stocksService) {
 
-        $scope.init = function() {
-            explore_stocksService.getTicker("AAPL")
+        $scope.init = function(ticker) {
+            explore_stocksService.getTicker(ticker)
             .then(function(getTickerResultData) {
                 console.log('service data: ', getTickerResultData);
                 $scope.tickerGraph = c3.generate({
@@ -32,6 +32,9 @@ var app = angular.module("financialSquawk");
             });
         };
 
+        $scope.enterTicker = function(ticker) {
+            $scope.init(ticker)
+        }
         // $scope.getTickerData = function(ticker) { //ticker is a placeholder for selected which is on my homeCtrl
         //     console.log('main_homeCtrl: ', ticker);
         // explore_stocksService.getTicker(ticker).then(function(data) {
