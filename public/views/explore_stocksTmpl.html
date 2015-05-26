@@ -1,21 +1,67 @@
-<div class='container-fluid' ng-controller="explore_stocksCtrl"><br>
+ 
+<!-- C3 GRAPHS -->
+<div ng-init="init()">
+ <h3 class="graphtitle">Apple Inc. Corporation - AAPL</h3>
+  <div id="chart"></div> <!-- This is used to position the chart.  -->
+  
+  <!-- AAPL DISPLAY CHART -->
+  <script>
+  var chart = c3.generate({
+    bindto: '#chart',
+    data: {
+      columns: [
+        ['Revenue', 30, 200, 100, 400, 150, 250],
+        ['Expenses', 50, 20, 10, 40, 15, 25]
+      ],
+      axes: {
+        Expenses: 'y2'
+      },
+      types: {
+        Revenue: 'bar' // ADD
+      }
+    },
+    axis: {
+      y: {
+        label: {
+          text: 'Revenue',
+          position: 'outer-middle'
+        }
+      },
+      y2: {
+        show: true,
+        label: {
+          text: 'Expenses',
+          position: 'outer-middle'
+        }
+      }
+    }
+});
+  </script>
 
-  	<h1 class="explore-heading">Explore Trends and Financial Heatlh</h1>
-  	<h2><strong>Search for Stock</strong></h2><br>
+  <div class='container-fluid' ng-controller="explore_stocksCtrl"><br>
 
-	<div>
-	  <form class="navbar-form navbar-center" role="search">
-	    <div class="form-group">
-	      <input type="text" ng-model="selected" typeahead="ticker for ticker in tickers | filter:$viewValue | limitTo:8" class="form-control" placeholder="Search Stock">
-	    </div>
-	    <button type="submit" class="btn btn-primary" ng-click="getTickerData(selected)">ENTER</button>
-	  </form>
-	  <button type="submit" class="btn btn-default btn-xs">Add more</button>
-	</div><br><br>
+    	<h1 class="explore-heading">Explore Trends and Financial Heatlh</h1>
+    	<h2><strong>Search for Stock</strong></h2><br>
 
-	<div ng-show="showData" ng-repeat="tickerObject in tickerArray">
-		<p>Common Stock: {{tickerObject.commonstock}}</p>
-		<p>Total Revenue: {{tickerObject.totalrevenue}}</p>
-	</div>
+  	<div>
+  	  <form class="navbar-form navbar-center" role="search">
+  	    <div class="form-group">
+  	      <input type="text" ng-model="selected" typeahead="ticker for ticker in tickers | filter:$viewValue | limitTo:8" class="form-control" placeholder="Search Stock">
+  	    </div>
+  	    <button type="submit" class="btn btn-primary" ng-click="enterTicker()">ENTER</button>
+  	  </form>
+  	  <button type="submit" class="btn btn-default btn-xs">Add more</button>
+  	</div><br><br>
 
+    
+
+    <!-- DISPLAY DATA -->
+  <!-- 	<div ng-show="showData" ng-repeat="tickerObject in tickerArray">
+  		<p>Common Stock: {{tickerObject.commonstock}}</p>
+  	</div> -->
+  </div>
+
+  <div>
+    <div id="tickerGraph" class="c3"></div>
+  </div>
 </div>

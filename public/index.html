@@ -8,20 +8,27 @@
 
 <!-- STYLESHEETS -->
 
-	<!-- BOOTSTRAP -->
+  <!-- BOOTSTRAP -->
 		<!-- BOOTSTRAP MAIN -->
 		<link rel="stylesheet" href="asset/libs/bootstrap/dist/css/bootstrap.min.css">
 		<!-- FLATLY THEME -->
 		<link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.css">
-	
+
 	<!-- FONT AWESOME -->
 		<link rel="stylesheet" href="asset/libs/font-awesome/css/font-awesome.min.css">
 
   <!-- C3 CSS -->
-  <link rel="stylesheet" href="/asset/libs/angular-c3/c3.css">
+  <link rel="stylesheet" href="/asset/libs/c3/c3.css">
 
 	<!-- CSS FILE -->
 		<link rel="stylesheet" href="stylesheets/style.css">
+
+
+  <!-- SCRIPTS C3-->
+    <!-- D3 SCRIPT  -->
+    <script src="/asset/libs/d3/d3.js" charset="utf-8"></script>
+    <!-- C3 SCRIPT  -->
+    <script src="/asset/libs/c3/c3.js" charset="utf-8"></script>
 </head>
 
 <body>
@@ -36,13 +43,13 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#/about">Financial Squawk</a>
+      <!-- <a class="navbar-brand" href="#/about">&nbsp; &nbsp;Financial Squawk</a> -->
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#/home">Home<span class="sr-only">(current)</span></a></li>
-        <li><a href="#/explorestocks">Explore Stocks</a></li>
+        <li><a href="#/home"><i class="fa fa-home fa-2x"></i><span class="sr-only">(current)</span></a></li>
+        <li><a href="#/explorestocks"><i class="fa fa-line-chart fa-2x"></i></a></li>
         <!-- <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -63,7 +70,7 @@
         <button type="submit" class="btn btn-default">SIGN UP</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#/signin">Sign in</a></li>
+        <li><a href="#/signin"><i class="fa fa-user fa-2x"></i></a></li>
       </ul>
     </div>
   </div>
@@ -74,7 +81,6 @@
     <i class="fa fa-line-chart fa-5x fontcolor"></i>
     <h1><a href="#/home">Financial Squawk</a></h1>
     <p>Investment Analysis at your finger tips!</p><br>
-
   </div>
 
 <!-- NGVIEWS -->
@@ -82,20 +88,17 @@
 
 <!-- SCRIPT FILES -->
 
-	<!-- JS LIB -->
+	<!-- JS LIBRARIES -->
 
 		<!-- JQUERY -->
 		<script src="asset/libs/jquery/dist/jquery.min.js"></script> 
 		<!-- ANGULAR MAIN-->
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script> 
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script> 
 		<!-- ANGULAR ROUTE -->
 		<script src="asset/libs/angular-route/angular-route.min.js"></script> 
 		<!-- TYPEHEAD AUTOCOMPLETE-->
 		<script src="asset/libs/ui-bootstrap-typehead-autocomplete/ui-bootstrap-custom-tpls-0.13.0.js"></script>
-    <!-- D3 SCRIPT  -->
-    <!-- <script src="/asset/libs/angular-c3/d3.v3.min.js"></script> -->
-     <!-- C3 SCRIPT  -->
-   <!--  <script src="/asset/libs/angular-d3/c3.min.js" charset="utf-8"></script> -->
+  
 
 		
 	<!-- ANGULAR FRONT APP  -->
@@ -105,7 +108,7 @@
 		<!-- CONTROLLERS -->
 		<script src="/js/controllers/main_homeCtrl.js"></script>
     <script src="/js/controllers/explore_stocksCtrl.js"></script>
-    <script src="/js/controllers/sign_inCtrl.js"></script>  
+    <script src="/js/controllers/sign_inCtrl.js"></script>
 		<!-- SERVICES -->
 		<script src="/js/services/main_homeService.js"></script>
     <script src="/js/services/explore_stocksService.js"></script>

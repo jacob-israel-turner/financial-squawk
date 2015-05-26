@@ -1,19 +1,67 @@
 var app = angular.module("financialSquawk");
 	
-	app.controller("explore_stocksCtrl", function($scope, $http, explore_stocksService) {
+	app.controller("explore_stocksCtrl", function($scope, explore_stocksService) {
 
-        $scope.getTickerData = function(ticker) { //ticker is a placeholder for selected which is on my homeCtrl
-            console.log('main_homeCtrl: ', ticker);
-
-        explore_stocksService.getTicker(ticker).then(function(data) {
-            //returning promise which is .then, data is what htttp is going to get
-        $scope.showData = true;
-
-        $scope.tickerArray = data;
-            console.log("data", data[0]);
+        $scope.init = function() {
+            explore_stocksService.getTicker("AAPL")
+            .then(function(getTickerResultData) {
+                console.log('service data: ', getTickerResultData);
+                $scope.tickerGraph = c3.generate({
+                    bindto: '#tickerGraph',
+                    data: {
+                        json: getTickerResultData,
+                        keys: {
+                            x: 'year',
+                            value: ['totalassets', 'commonstock']
+                        },
+                        type: 'spline',
+                        xFormat: '%Y'
+                    },
+                    axis: {
+                        x: {
+                            type: 'timeseries',
+                            tick: {
+                                format: '%Y'
+                            }
+                        }
+                    },
+                    padding: {
+                        right: 10
+                    }
+                });
             });
         };
-        $scope.showData = false;
+
+        // $scope.getTickerData = function(ticker) { //ticker is a placeholder for selected which is on my homeCtrl
+        //     console.log('main_homeCtrl: ', ticker);
+        // explore_stocksService.getTicker(ticker).then(function(data) {
+
+            
+
+            //returning promise which is .then, data is what htttp is going to get
+            //$scope.showData = true;
+
+            // $scope.tickerArray = data;
+            //     console.log(tickerArray);
+            //     console.log("data", data[0]);
+               
+        //     var totalAssets = function(arr) {
+        //         var ta = ["Total Assets"]
+        //         for (var i = 0; i < arr.length; i++) {
+        //             ta.push(+(arr[i].totalassets));
+        //         }
+        //         console.log(ta);
+        //         return ta;
+        //     };
+        //     $scope.totalAssets = totalAssets(data);
+        // });
+        //     $scope.totalAssets = data.map(function(i) {
+        //         var ta = ["Total Assets"];
+        //         ta.push(i.totalassets)
+        //     })
+        // };
+
+        //$scope.showData = false;
 
         //AUTOCOMPLETE
 		$scope.selected = undefined;
