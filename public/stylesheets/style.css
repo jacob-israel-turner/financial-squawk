@@ -43,3 +43,8 @@ td {
 .graphtitle {
 	text-align: center;
 }
+
+.dashboard-save {
+	float: right;
+	margin: 15px;
+}

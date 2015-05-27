@@ -7,11 +7,13 @@ var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 var session = require("express-session"); 
 
-// INITIALIZING APP & MIDDLEWARES
+// INITIALIZING APP & 
 var app = express();
 var port = 8000;
+
+//MIDDLEWARES
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session()); //creating a session on the server which is then being serailaized into browser
 // app.use(session({secret: 'fav places are awesome'}));
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
@@ -23,11 +25,13 @@ var User = require("./app/models/User");
 mongoose.connect("mongodb://localhost/financial-squawk");
 
 //PASSPORT
-passport.use(new LocalStrategy({
+passport.use(new LocalStrategy({ //localstrategy is linked to local authenticate on line 78
   usernameField: "email"
 }, function(email, password, done) { 
   //define how we match user credentials to db values
   User.findOne({ email: email }, function(err, user){
+    console.log("Checking user", user)
+    console.log("Error", err)
     if (!user) {
       done(new Error("This user does not exist :)"
         ));
@@ -35,6 +39,8 @@ passport.use(new LocalStrategy({
     user.verifyPassword(password).then(function(
       doesMatch) {
       if (doesMatch) {
+        console.log(doesMatch);
+        console.log('user match', user)
         done(null, user);
       }
       else {
@@ -44,8 +50,9 @@ passport.use(new LocalStrategy({
   });
 }));
 
-passport.serializeUser(function(user, done) {
-  done(null, user_id);
+//reads CURD keys on the browser and server
+passport.serializeUser(function(user, done) { 
+  done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
@@ -74,9 +81,15 @@ app.post("/app/users", function(req,res) {
     });
 });
 
-//POST for failure to login
-app.post("/app/users/auth", passport.authenticate("local", { failureRedirect: "/login" }), function(req, res) {
-  return res.json({ message: "you logged in"});
+
+//POST passport.authenticate
+app.post("/app/users/auth", function(req, res, next){
+  passport.authenticate('local', function(err, user){
+    if(err) { return next(err); }
+    if(user){
+      res.send(200)
+    }
+  })(req, res, next);
 });
 
 //GET for Ticker & financials 10-K
@@ -109,3 +122,5 @@ app.listen(port, function() {
 //http://expressjs.com/guide/routing.html //ROUTING
 //https://github.com/STRML/mongoose-auth REGISTRATION/MONGOOSE AUTH
 //https://scotch.io/tutorials/easy-node-authentication-setup-and-local AUTH
+
+// req.user it directs you the page and doesn't log you out

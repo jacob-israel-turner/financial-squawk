@@ -1,0 +1,66 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+    <h1 class="page-header"><strong>DASHBOARD</strong></h1>
+
+    <!-- FINANCIAL PROFILE -->
+    <h2 class="sub-header">My Financial Profile</h2>
+    <div class="row placeholders">
+        <div class="col-xs-6 col-sm-3 placeholder">
+            <label class="control-label" for="focusedInput">Monthly Income $</label>
+  			<input class="form-control" id="focusedInput" type="text" placeholder="10,000">
+        </div>
+        <div class="col-xs-6 col-sm-3 placeholder">
+            <label class="control-label" for="focusedInput">Monthly Expenses $</label>
+  			<input class="form-control" id="focusedInput" type="text" placeholder="10,000">
+        </div>
+        <div class="col-xs-6 col-sm-3 placeholder">
+            <label class="control-label" for="focusedInput">Total Savings $</label>
+  			<input class="form-control" id="focusedInput" type="text" placeholder="10,000">
+        </div>
+        <div class="col-xs-6 col-sm-3 placeholder">
+            <label class="control-label" for="focusedInput">Total Debt $</label>
+  			<input class="form-control" id="focusedInput" type="text" placeholder="10,000">
+  		</div>
+		<div class="dashboard-save"><br>
+			<a href="#" class="btn btn-primary">SAVE CHANGES</a>
+		</div>	
+    </div>
+
+    <div>
+        <h2 class="sub-header">Stocks Watch List</h2>
+        <div class="form-group">
+		  <label class="control-label">Add your favorite stocks</label>
+		  <div class="input-group">
+		    <span class="input-group-addon">$</span>
+		      <input type="text" ng-model="selected" typeahead="ticker for ticker in tickers | filter:$viewValue | limitTo:8" class="form-control" placeholder="Search Stock">
+		    <span class="input-group-btn">
+		      <button class="btn btn-primary" type="button">ADD</button>
+		    </span>
+		  </div>
+		</div>
+
+        <ul class="list-group">
+            <li class="list-group-item">
+                <span class="badge">Remove</span> Stock 1
+            </li>
+            <li class="list-group-item">
+                <span class="badge">Remove</span> Stock 2
+            </li>
+            <li class="list-group-item">
+                <span class="badge">Remove</span> Stock 3
+            </li>
+            <li class="list-group-item">
+                <span class="badge">Remove</span> Stock 4
+            </li>
+            <li class="list-group-item">
+                <span class="badge">Remove</span> Stock 5
+            </li>
+        </ul>
+  
+		<ul class="pager">
+		  <li><a href="#">Previous</a></li>
+		  <li><a href="#">Next</a></li>
+		</ul>
+    </div>
+
+</div>

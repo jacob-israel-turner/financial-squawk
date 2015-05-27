@@ -29,6 +29,13 @@ app.config(function($routeProvider) {
 		templateUrl: "templates/sign_upTmpl.html",
 		controller: "sign_upCtrl"
 		//resolve if necessary
+	});
+
+	$routeProvider
+	.when("/dashboard", {
+		templateUrl: "templates/dashboardTmpl.html",
+		controller: "dashboardCtrl"
+		//resolve if necessary
 	})
 
 	// $routeProvider

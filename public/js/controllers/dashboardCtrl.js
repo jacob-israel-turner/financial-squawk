@@ -1,40 +1,10 @@
 var app = angular.module("financialSquawk");
-	
-	app.controller("explore_stocksCtrl", function($scope, explore_stocksService) {
-
-        $scope.init = function(ticker) {
-            explore_stocksService.getTicker(ticker)
-            .then(function(getTickerResultData) {
-                console.log('service data: ', getTickerResultData);
-                $scope.tickerGraph = c3.generate({
-                    bindto: '#tickerGraph',
-                    data: {
-                        json: getTickerResultData,
-                        keys: {
-                            x: 'year',
-                            value: ['totalrevenue', 'costofrevenue', 'netincome']
-                        },
-                        type: 'bar',
-                        xFormat: '%Y'
-                    },
-                    axis: {
-                        x: {
-                            type: 'timeseries',
-                            tick: {
-                                format: '%Y'
-                            }
-                        }
-                    },
-                    padding: {
-                        right: 10
-                    }
-                });
-            });
-        };
+    
+    app.controller("dashboardCtrl", function($scope) {
 
         //AUTOCOMPLETE
-		$scope.selected = undefined;
-  		$scope.tickers = [
+        $scope.selected = undefined;
+        $scope.tickers = [
 
     "AUB.AX",
 

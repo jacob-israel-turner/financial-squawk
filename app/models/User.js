@@ -3,6 +3,7 @@ var bcrypt = require('bcrypt');
 var Schema = mongoose.Schema;
 var q = require('q');
 
+//how it is storing the data on Mongoose. creating a new instance on schema
 var userSchema = new Schema({
 	email: { type: String, unique: true },
 	password: String,
