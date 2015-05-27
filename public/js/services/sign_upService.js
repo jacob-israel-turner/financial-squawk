@@ -5,7 +5,7 @@ var app = angular.module('financialSquawk');
 			var deferred = $q.defer();
 			$http({
 				method: "POST",
-				url: "/app/TBD",
+				url: "/app/users",
 				data: {
 					email: email,
 					password: password
@@ -16,4 +16,5 @@ var app = angular.module('financialSquawk');
 				deferred.reject(res.data);
 			});
 			return deferred.promise;
+};
 });

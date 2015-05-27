@@ -4,7 +4,7 @@ app.controller("sign_inCtrl", function($scope, $location, sign_inService) {
 
 	$scope.clickLogin = function() {
 		sign_inService.signin($scope.email, $scope.password).then(function() {
-			$location.path("/TBD");
+			$location.path("/signin");
 		}).catch(function(err) {
 			$scope.error = err;
 		});

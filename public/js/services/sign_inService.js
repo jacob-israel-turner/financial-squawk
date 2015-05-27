@@ -5,7 +5,7 @@ var app = angular.module('financialSquawk');
 			var deferred = $q.defer();
 			$http({
 				method: "POST",
-				url: "/app/TBD/TBD",
+				url: "/app/users/auth",
 				data: {
 					email: email,
 					password: password
