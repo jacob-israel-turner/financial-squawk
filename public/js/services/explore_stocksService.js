@@ -2,9 +2,6 @@ var app = angular.module("financialSquawk");
 	
 app.service("explore_stocksService", function($http, $q) {
 
-	//var tickerService = this;
-
-	//same thing as this.getAllCompanies. 
 	this.getTicker = function(ticker) {
 		console.log('homeService: ', ticker);
 	 var defer =$q.defer(); //promise function

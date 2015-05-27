@@ -41,3 +41,4 @@ app.listen(port, function() {
 //links to do backend
 //http://expressjs.com/guide/routing.html //ROUTING
 //https://github.com/STRML/mongoose-auth REGISTRATION/MONGOOSE AUTH
+//https://scotch.io/tutorials/easy-node-authentication-setup-and-local AUTH
