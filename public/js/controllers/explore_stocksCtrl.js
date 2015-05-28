@@ -32,6 +32,10 @@ var app = angular.module("financialSquawk");
             });
         };
 
+         $scope.enterTicker = function(ticker) {
+            $scope.init(ticker)
+        };
+
         //AUTOCOMPLETE
 		$scope.selected = undefined;
   		$scope.tickers = [

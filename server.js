@@ -112,6 +112,10 @@ app.get("/app/ticker/quarterlydata", function(req, res) {
 	});
 });
 
+//CONTROLLER 
+//stocks
+app.post("app/stockwatch", StockController.create);
+
 
 //SHOUT OUT TO PORT
 app.listen(port, function() {
