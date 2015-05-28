@@ -14,7 +14,7 @@
  	text-align: center;
 }
 
-.home-heading explore-heading {
+.home-heading .explore-heading {
 	text-align: center;
 }
 
@@ -45,6 +45,11 @@ td {
 }
 
 .dashboard-save {
+	float: right;
+	margin: 15px;
+}
+
+#logout {
 	float: right;
 	margin: 15px;
 }

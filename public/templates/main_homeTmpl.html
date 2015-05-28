@@ -2,7 +2,7 @@
 
   <!-- HEADING -->
   <div>
-    <h1 class="home-heading">Find Most Recent Quarterly Filings</h1>
+    <h1 class="home-heading">Find Most Recent Annual Filings</h1>
     <h2><strong>Search for Stock<strong></h2><br>
   </div>
 
@@ -14,35 +14,101 @@
       </div>
       <button type="submit" class="btn btn-primary" ng-click="getTickerData(selected)">ENTER</button>
     </form>
-    <button type="submit" class="btn btn-default btn-xs">Add more</button>
-  </div><br>
+  </div><br><br>
 
 <!-- TABLE -->
-  <div>
+  <div ng-show="tickerArray">
+  <h2>Income Statement Financials</h2>
+  <p>The income statement illustrates the profitability of a company over a given period of time.</p>
     <table class="table table-striped table-hover responsive">
       <thead ng-show"showData">
         <tr class="table-nav">
           <th>Stock</th>
           <th>Period End Date</th>
-          <th>Quarter</th>
           <th>Period Length</th>
-          <th>Retained Earnings</th>
-          <th>Total Assets</th>
-          <th>Total Liabilities</th>
+          <th>Revenue</th>
+          <th>Expenses</th>
+          <th>Net Income</th>
+          <th>Gross Profit</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="tickerObject in tickerArray">
           <td>{{tickerObject.company_symbol}}</td>
           <td>{{tickerObject.periodenddate}}</td>
-          <td>{{tickerObject.quarter}}</td>
-          <td>{{tickerObject.periodlength}} months</td>
-          <td>{{tickerObject.retainedearnings}}</td>
-          <td>{{tickerObject.totalassets}}</td>
-          <td>{{tickerObject.totalliabilities}}</td>
+          <td>{{tickerObject.periodlength}}</td>
+          <td>{{tickerObject.totalrevenue}}</td>
+          <td>{{tickerObject.costofrevenue}}</td>
+          <td>{{tickerObject.netincome}}</td>
+          <td>{{tickerObject.grossprofit}}</td>
         </tr>
       </tbody>
     </table><br><br><br>
+
+  <!-- TABLE -->
+  <h2>Balance Sheet Financials</h2>
+  <p>The balance sheet provides an overview of the company's financial situation at a specific time.</p>
+    <table class="table table-striped table-hover responsive">
+      <thead ng-show"showData">
+        <tr class="table-nav">
+          <th>Stock</th>
+          <th>Period End Date</th>
+          <th>Period Length</th>
+          <th>Retained Earnings</th>
+          <th>Total Assets</th>
+          <th>Total Liabilities</th>
+          <th>Common Stocks</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="tickerObject in tickerArray">
+          <td>{{tickerObject.company_symbol}}</td>
+          <td>{{tickerObject.periodenddate}}</td>
+          <td>{{tickerObject.periodlength}}</td>
+          <td>{{tickerObject.retainedearnings}}</td>
+          <td>{{tickerObject.totalassets}}</td>
+          <td>{{tickerObject.totalliabilities}}</td>
+          <td>{{tickerObject.commonstock}}</td>
+        </tr>
+      </tbody>
+    </table><br><br><br>
+
+  <!-- TABLE -->
+  <h2>Cash Flow Financials</h2>
+  <p>The cash flow statement (CFS) records the amount of actual money that flows into and out of the company.</p>
+    <table class="table table-striped table-hover responsive">
+      <thead ng-show"showData">
+        <tr class="table-nav">
+          <th>Stock</th>
+          <th>Period End Date</th>
+          <th>Period Length</th>
+          <th>Dividends</th>
+          <th>Cash from Financing</th>
+          <th>Cash from Investing</th>
+          <th>Cash from Operating</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="tickerObject in tickerArray">
+          <td>{{tickerObject.company_symbol}}</td>
+          <td>{{tickerObject.periodenddate}}</td>
+          <td>{{tickerObject.periodlength}}</td>
+          <td>{{tickerObject.dividendspaid}}</td>
+          <td>{{tickerObject.cashfromfinancingactivities}}</td>
+          <td>{{tickerObject.cashfrominvestingactivities}}</td>
+          <td>{{tickerObject.cashfromoperatingactivities}}</td>
+        </tr>
+      </tbody>
+    </table><br><br><br>
+  </div>
+
+  <div>
+   <blockquote>
+    <p>"Price is what you pay. Value is what you get."</p>
+    <small>Warren Buffet <cite title="Source Title"></cite></small>
+   </blockquote>
   </div>
 
 </div>

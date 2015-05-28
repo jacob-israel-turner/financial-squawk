@@ -92,7 +92,17 @@ app.post("/app/users/auth", function(req, res, next){
   })(req, res, next);
 });
 
-//GET for Ticker & financials 10-K
+//GET for Quarterly filings home
+app.get("/app/ticker/quarterlydata", function(req, res) { 
+  request("https://sec.kimonolabs.com/companies/" + req.query.ticker + "/forms/10-K/ANN/2011,2012,2013,2014,2015/?apikey=nVtOIzPxxLneP3jmei68ADza0GvaV2gv", function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        console.log(body);
+        res.send(body);  //send the callback response to my angular
+      }
+  });
+});
+
+//GET for Ticker & financials explore
 app.get("/app/ticker", function(req, res) {
 	request("https://sec.kimonolabs.com/companies/" + req.query.ticker + "/forms/10-K/ANN/2011,2012,2013,2014,2015/?apikey=nVtOIzPxxLneP3jmei68ADza0GvaV2gv", function (error, response, body) {
   		if (!error && response.statusCode == 200) {
@@ -102,19 +112,9 @@ app.get("/app/ticker", function(req, res) {
 	});
 });
 
-//GET for Quarterly filings 
-app.get("/app/ticker/quarterlydata", function(req, res) { 
-	request("https://sec.kimonolabs.com/companies/" + req.query.ticker + "/forms/10-Q/TTM/2015/Q1, Q2/?apikey=nVtOIzPxxLneP3jmei68ADza0GvaV2gv", function (error, response, body) {
-  		if (!error && response.statusCode == 200) {
-    		console.log(body);
-    		res.send(body);  //send the callback response to my angular
-  		}
-	});
-});
-
 //CONTROLLER 
 //stocks
-app.post("app/stockwatch", StockController.create);
+// app.post("app/stockwatch", StockController.create);
 
 
 //SHOUT OUT TO PORT
