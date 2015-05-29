@@ -11,6 +11,7 @@ var app = angular.module("financialSquawk");
 
         $scope.tickerArray = data;
             console.log("data", data[0]);
+            
             });
         };
         $scope.showData = false;

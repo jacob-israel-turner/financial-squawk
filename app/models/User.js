@@ -29,7 +29,7 @@ userSchema.methods.verifyPassword = function(password) {
 		if (err) {
 			deferred.resolve(false);
 		}
-		deferred.resolve(true);
+		deferred.resolve(res);
 	});
 	return deferred.promise;
 };

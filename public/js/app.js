@@ -50,4 +50,3 @@ app.config(function($routeProvider) {
 	});
 
 });
-

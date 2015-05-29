@@ -17,3 +17,8 @@ app.service("main_homeService", function($http, $q) {
 	 return defer.promise; //return promise for $q
 	};
 });
+
+
+function checker(number){
+	number.length
+}

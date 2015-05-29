@@ -11,7 +11,58 @@ var session = require("express-session");
 var app = express();
 var port = 8000;
 
+//PASSPORT
+passport.use(new LocalStrategy({ //localstrategy is linked to local authenticate on line 78
+  usernameField: "email"
+}, function(email, password, done) { 
+  //define how we match user credentials to db values
+  User.findOne({ email: email }, function(err, user){
+    // console.log("Checking user", user)
+    // console.log("Error", err)
+    if (!user) {
+      done(new Error("This user does not exist :)"), null);
+    }
+    user.verifyPassword(password).then(function(
+      doesMatch) {
+      if (doesMatch) {
+        // console.log(doesMatch);
+        // console.log('user match', user)
+        console.log('matched', user);
+        done(null, user);
+      }
+      else {
+        done(new Error("Please verify your password and try again: )"), null);
+      }
+    });
+  });
+}));
+
+
+passport.serializeUser(function(user, done, blah) { 
+  console.log('serializing', user, done, blah);
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  console.log('deserializing', user);
+  done(null, user);
+  // User.findById(id, function(err, user) {
+  //   done(err, user);
+  // });
+});
+
+app.use(function(req, res, next){
+  console.log('User', req.user);
+  next();
+})
+
+
 //MIDDLEWARES
+app.use(session({ 
+  secret: "ghrisdfaasdfsaf",
+  resave: true,
+  saveUninitialized: true 
+}));
 app.use(passport.initialize());
 app.use(passport.session()); //creating a session on the server which is then being serailaized into browser
 // app.use(session({secret: 'fav places are awesome'}));
@@ -24,41 +75,25 @@ var User = require("./app/models/User");
 //MONGO CONNECT
 mongoose.connect("mongodb://localhost/financial-squawk");
 
-//PASSPORT
-passport.use(new LocalStrategy({ //localstrategy is linked to local authenticate on line 78
-  usernameField: "email"
-}, function(email, password, done) { 
-  //define how we match user credentials to db values
-  User.findOne({ email: email }, function(err, user){
-    console.log("Checking user", user)
-    console.log("Error", err)
-    if (!user) {
-      done(new Error("This user does not exist :)"
-        ));
-    }
-    user.verifyPassword(password).then(function(
-      doesMatch) {
-      if (doesMatch) {
-        console.log(doesMatch);
-        console.log('user match', user)
-        done(null, user);
-      }
-      else {
-        done(new Error("Please verify your password and try again: )"));
-      }
-    });
-  });
-}));
 
 //reads CURD keys on the browser and server
-passport.serializeUser(function(user, done) { 
-  done(null, user._id);
-});
 
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
-  });
+
+//gateway with authoriaztion
+var requireAuth = function(req, res, next) {
+  console.log(req.user);
+  if (!req.isAuthenticated()) {
+    console.log("req not authenticated", req.user)
+    return res.status(401).end();
+  }
+  console.log("in req auth req.user", req.user);
+  next();
+};
+
+//logout
+app.get('/api/auth/logout', function(req, res) {
+  req.logout();
+  return res.redirect('/#login');
 });
 
 //ENDPOINTS
@@ -112,8 +147,8 @@ app.get("/app/ticker", function(req, res) {
 	});
 });
 
-//CONTROLLER 
-//stocks
+
+// //stock
 // app.post("app/stockwatch", StockController.create);
 
 
