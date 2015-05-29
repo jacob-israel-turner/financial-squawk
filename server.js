@@ -20,26 +20,23 @@ passport.use(new LocalStrategy({ //localstrategy is linked to local authenticate
     // console.log("Checking user", user)
     // console.log("Error", err)
     if (!user) {
-      done(new Error("This user does not exist :)"), null);
+      return done(new Error("This user does not exist :)"), null);
     }
     user.verifyPassword(password).then(function(
       doesMatch) {
       if (doesMatch) {
-        // console.log(doesMatch);
-        // console.log('user match', user)
-        console.log('matched', user);
-        done(null, user);
+        return done(null, user);
       }
       else {
-        done(new Error("Please verify your password and try again: )"), null);
+        return done(new Error("Please verify your password and try again: )"), null);
       }
     });
   });
 }));
 
 
-passport.serializeUser(function(user, done, blah) { 
-  console.log('serializing', user, done, blah);
+passport.serializeUser(function(user, done) { 
+  console.log('serializing', user);
   done(null, user);
 });
 
@@ -51,13 +48,11 @@ passport.deserializeUser(function(user, done) {
   // });
 });
 
-app.use(function(req, res, next){
-  console.log('User', req.user);
-  next();
-})
 
 
 //MIDDLEWARES
+app.use(express.static(__dirname + "/public"));
+app.use(bodyParser.json());
 app.use(session({ 
   secret: "ghrisdfaasdfsaf",
   resave: true,
@@ -66,8 +61,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session()); //creating a session on the server which is then being serailaized into browser
 // app.use(session({secret: 'fav places are awesome'}));
-app.use(express.static(__dirname + "/public"));
-app.use(bodyParser.json());
+
+
+
+
 
 //MODELS
 var User = require("./app/models/User");
@@ -79,14 +76,18 @@ mongoose.connect("mongodb://localhost/financial-squawk");
 //reads CURD keys on the browser and server
 
 
+app.use(function(req, res, next){
+  console.log('User', req.user);
+  next();
+})
+
+
 //gateway with authoriaztion
 var requireAuth = function(req, res, next) {
-  console.log(req.user);
   if (!req.isAuthenticated()) {
     console.log("req not authenticated", req.user)
     return res.status(401).end();
   }
-  console.log("in req auth req.user", req.user);
   next();
 };
 
@@ -98,6 +99,7 @@ app.get('/api/auth/logout', function(req, res) {
 
 //ENDPOINTS
 //POST for AUTH
+
 app.post("/app/users", function(req,res) {
   User.findOne({ email: req.body.email }).exec().then
     (function(user) {
@@ -118,14 +120,38 @@ app.post("/app/users", function(req,res) {
 
 
 //POST passport.authenticate
+/*
 app.post("/app/users/auth", function(req, res, next){
-  passport.authenticate('local', function(err, user){
+  passport.authenticate('local', function(err, user, info){
     if(err) { return next(err); }
     if(user){
-      res.send(200)
+      console.log(user);
+      res.send(user);
     }
   })(req, res, next);
 });
+*/
+
+/*
+app.post('/app/users/auth', passport.authenticate('local', { failureRedirect: '/' }), function(req, res){
+  console.log(req.user);
+  res.redirect('/');
+});
+*/
+
+app.post('/app/users/auth', function(req, res, next) {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) { return next(err) }
+    if (!user) {
+      return res.redirect('/login')
+    }
+    req.logIn(user, function(err) { // req.logIn was missing!
+      if (err) { return next(err); }
+      return res.redirect('/');
+    });
+  })(req, res, next);
+});
+
 
 //GET for Quarterly filings home
 app.get("/app/ticker/quarterlydata", function(req, res) { 
@@ -138,7 +164,7 @@ app.get("/app/ticker/quarterlydata", function(req, res) {
 });
 
 //GET for Ticker & financials explore
-app.get("/app/ticker", function(req, res) {
+app.get("/app/ticker", requireAuth, function(req, res) {
 	request("https://sec.kimonolabs.com/companies/" + req.query.ticker + "/forms/10-K/ANN/2011,2012,2013,2014,2015/?apikey=nVtOIzPxxLneP3jmei68ADza0GvaV2gv", function (error, response, body) {
   		if (!error && response.statusCode == 200) {
     		console.log(body);
